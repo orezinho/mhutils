@@ -1,0 +1,22 @@
+name: MHUtils
+version: '1.0'
+main: orepton.mHUtils.MHUtils
+api-version: '1.21'
+authors: [ orepton ]
+description: Plugin with many utilities for your server.
+softdepend: [PlaceholderAPI]
+commands:
+  fly:
+    description: Command to toggle fly.
+    usage: "/<command> [on|off]"
+  mhutils:
+    description: Main command of the plugin.
+    usage: "/<command>"
+permissions:
+  mhutils.*:
+    default: op
+    children:
+      mhutils.use: true
+      mhutils.reload: true
+      mhutils.fly.use: true
+      mhutils.fly.join: true
