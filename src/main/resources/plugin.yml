@@ -1,7 +1,7 @@
 name: MHUtils
-version: '1.0'
+version: '1.0.2'
 main: orepton.mHUtils.MHUtils
-api-version: '1.21'
+api-version: '1.13'
 authors: [ orepton ]
 description: Plugin with many utilities for your server.
 softdepend: [PlaceholderAPI]

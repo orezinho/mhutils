@@ -1,18 +1,16 @@
 # Plugin prefix.
 prefix: "&b[MHUtils] "
 
+# Message to display when the config is reloaded successfully.
 config-reload: "&aConfig reloaded!"
 
+# Message to display when player sends help command.
 help-message:
   - ""
   - "&bMHUtils - Commands List:"
   - " &a/mhutils help &7- &fDisplays this message."
   - " &a/mhutils reload &7- &fReloads the config files."
   - ""
-
-# This determines if the fly future will be activated on the server.
-# Obs: You need to reload the server if you want to change this value.
-fly-enabled: true
 
 # Messages to display when player toggles flight mode
 fly-on: "&aFly mode on."
@@ -37,32 +35,9 @@ fly-already-off-other: "&b%player_name%&c's flight mode is already off."
 # Message to display when the target player isn't online or can't be reached.
 target-not-found: "&cPlayer not found."
 
-# Sound to play when player toggles flight mode.
-fly-sound:
-  sound: "BLOCK_NOTE_BLOCK_BASS"
-  volume: 1.0
-  pitch: 1.0
-
-# Sound to play whenever an error happens.
-error-sound:
-  sound: "ENTITY_ENDERMAN_TELEPORT"
-  volume: 1
-  pith: 1
-
 # Message to display when player doesn't have permission for flight mode.
 permission-error: "&cYou don't have enough permissions for this."
-
-# Worlds where the plugin is active.
-# Obs: If you want to disable on all worlds
-# let the list like this:
-# worlds-whitelist:
-#   - ""
-worlds-whitelist:
-  - world
 
 # Message to display when player tries to toggle flight in a world
 # that isn't listed on worlds-whitelist.
 world-error: "&cYou can't toggle flight mode in this world."
-
-
-

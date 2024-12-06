@@ -1,0 +1,45 @@
+# Plugin prefix.
+prefix: "&b[MHUtils] "
+
+# Mensagem a mostrar quando a configuração for recarregada com sucesso.
+config-reload: "&aConfiguração recarregada!"
+
+# Mensagem a mostrar quando o jogador executar o comando de ajuda.
+help-message:
+  - ""
+  - "&bMHUtils - Lista de comandos:"
+  - " &a/mhutils help &7- &fMostra esta mensagem."
+  - " &a/mhutils reload &7- &fRecarrega a configuração."
+  - ""
+
+# Mensagem a mostrar quando o jogador alternar o modo voar.
+fly-on: "&aModo voar ativado."
+fly-off: "&cModo voar desativado."
+
+# Mensagem a mostrar se o jogador tentar alternar o modo voar para
+# on/off quando já está on/off.
+fly-already-on: "&cSeu modo voar já está ativado."
+fly-already-off: "&cSeu modo voar já está desativado."
+
+# Mensagem a mostrar quando o jogador alternar o modo voar de outro jogador.
+fly-on-other: "&aVocê ativou o modo voar de &b%player_name%&a."
+fly-off-other: "&cVocê desativou o modo voar de &b%player_name%&c."
+
+# Mensagem a mostrar quando o jogador tiver seu modo voar alterado por outro jogador.
+fly-on-from-other: "&aSeu modo voar foi ativado por &b%player_name%&a."
+fly-off-from-other: "&cSeu modo voar foi desativado por &b%player_name%&a."
+
+# Mensagem a mostrar se o jogador tentar alternar o modo voar para
+# on/off quando já está on/off de outro jogador.
+fly-already-on-other: "&cO modo voar de &b%player_name%&c já está ativado."
+fly-already-off-other: "&cO modo voar de &b%player_name%&c já está desativado."
+
+# Mensagem a mostrar quando o jogador-alvo não está online ou não pôde ser alcançado.
+target-not-found: "&cJogador não encontrado."
+
+# Mensagem a mostrar quando o jogador não tem permissão para usar o comando de voar.
+permission-error: "&cYou don't have enough permissions for this."
+
+# Mensagem a mostrar quando o jogador tentar ativar o modo em um
+# mundo que não está listado no worlds-whitelist na config.yml.
+world-error: "&cVocê não pode alternar o modo voar neste mundo."

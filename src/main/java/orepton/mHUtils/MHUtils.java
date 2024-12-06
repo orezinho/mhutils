@@ -3,42 +3,27 @@ package orepton.mHUtils;
 import orepton.mHUtils.Commands.FlyCommand;
 import orepton.mHUtils.Commands.MHCommand;
 import orepton.mHUtils.Events.PlayerJoin;
+import orepton.mHUtils.Files.ConfigManager;
+import orepton.mHUtils.Files.MessagesManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.TabExecutor;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.Objects;
 
 public final class MHUtils extends JavaPlugin {
 
+    private MessagesManager messagesManager;
+    private ConfigManager configManager;
+
     @Override
     public void onEnable() {
-        // Plugin startup logic
-        FileConfiguration config = this.getConfig();
-
-        // Config
-        saveDefaultConfig();
-
         // Registering commands and events
-        TabExecutor FlyCmd = new FlyCommand(this);
-        TabExecutor MHCmd = new MHCommand(this);
+        registerCommands();
 
-        this.getCommand("mhutils").setTabCompleter(MHCmd);
-        this.getCommand("mhutils").setExecutor(MHCmd);
-
-        boolean fly_enabled = this.getConfig().getBoolean("fly-enabled");
-
-        if (fly_enabled) {
-            try {
-                this.getCommand("fly").setTabCompleter(FlyCmd);
-                this.getCommand("fly").setExecutor(FlyCmd);
-            } catch (NullPointerException e) {
-                e.fillInStackTrace();
-            }
-
-        } else {
-            Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "[MHUtils] You've disabled fly features.");
-        }
+        configManager = new ConfigManager(this);
+        messagesManager = new MessagesManager(this, configManager.getLang() + ".yml");
 
         getServer().getPluginManager().registerEvents(new PlayerJoin(this), this);
 
@@ -48,12 +33,28 @@ public final class MHUtils extends JavaPlugin {
             Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "[MHUtils] PlaceholderAPI couldn't be found. It's recommended to install this plugin.");
             Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "[MHUtils] Plugin successfully activated!");
         }
-
-
     }
 
     @Override
     public void onDisable() {
         // Plugin shutdown logic
     }
+
+    public void registerCommands() {
+        TabExecutor FlyCmd = new FlyCommand(this);
+        TabExecutor MHCmd = new MHCommand(this);
+        Objects.requireNonNull(this.getCommand("fly")).setTabCompleter(FlyCmd);
+        Objects.requireNonNull(this.getCommand("fly")).setExecutor(FlyCmd);
+        Objects.requireNonNull(this.getCommand("mhutils")).setTabCompleter(MHCmd);
+        Objects.requireNonNull(this.getCommand("mhutils")).setExecutor(MHCmd);
+    }
+
+    public MessagesManager getMessagesManager() {
+        return messagesManager;
+    }
+
+    public ConfigManager getConfigManager() {
+        return configManager;
+    }
+
 }

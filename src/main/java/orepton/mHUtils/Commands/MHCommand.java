@@ -1,5 +1,7 @@
 package orepton.mHUtils.Commands;
 
+import orepton.mHUtils.Files.ConfigManager;
+import orepton.mHUtils.Files.MessagesManager;
 import orepton.mHUtils.MHUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -7,9 +9,9 @@ import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.util.StringUtil;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,57 +19,60 @@ import java.util.List;
 public class MHCommand implements TabExecutor {
 
     private final MHUtils plugin;
+    private final ConfigManager configManager;
 
     public MHCommand(MHUtils plugin) {
         this.plugin = plugin;
+        configManager = new ConfigManager(plugin);
+
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
         Player p = (Player) sender;
-        FileConfiguration config = this.plugin.getConfig();
-        List<String> helpmsg = config.getStringList("help-message");
         Location plocation = p.getLocation();
 
-        String reload_msg = config.getString("config-reload");
-        String prefix = config.getString("prefix");
+        MessagesManager message;
+        ConfigManager configFile = plugin.getConfigManager();
 
-        String perm_error = config.getString("permission-error");
-        String error_sound = config.getString("error-sound.sound");
-        float error_volume = config.getLong("error-sound.volume");
-        float error_pitch = config.getLong("error-sound.pitch");
+        configFile.LoadConfig();
+        message = new MessagesManager(plugin, configManager.getLang() + ".yml");
+        message.loadMessages();
 
         if (args.length == 0) {
             if (p.hasPermission("mhutils.use")) {
-                for (String line : helpmsg) {
+                for (String line : message.getHelp()) {
                     p.sendMessage(ccolor(line));
                 }
             } else {
-                MsgSound(p, perm_error, error_sound, error_volume, error_pitch);
+                MsgSound(p, message.getPerm_error(), message.getError_sound(), message.getError_volume(), message.getError_pitch());
             }
         } else if (args.length == 1) {
-            if (p.hasPermission("mhutils.reload"))
-            switch (args[0]) {
-                case "reload":
-                    this.plugin.reloadConfig();
-                    if (reload_msg != null) {
-                        p.sendMessage(ccolor(prefix) + ccolor(reload_msg));
-                        p.playSound(plocation, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0f, 2.0f);
-                    }
-                    break;
-                case "help":
-                    for (String line : helpmsg) {
-                        p.sendMessage(ccolor(line));
-                    }
-                    break;
+            if (p.hasPermission("mhutils.reload")) {
+                switch (args[0]) {
+                    case "reload":
+                        message.loadMessages();
+                        configFile.LoadConfig();
+
+                        if (message.getReload() != null) {
+                            p.sendMessage(ccolor(message.getPrefix()) + ccolor(message.getReload()));
+                            p.playSound(plocation, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0f, 2.0f);
+                        }
+                        break;
+                    case "help":
+                        for (String line : message.getHelp()) {
+                            p.sendMessage(ccolor(line));
+                        }
+                        break;
+                }
             }
+
         }
         return true;
     }
 
     @Override
-    public List<String> onTabComplete(CommandSender sender, Command cmd, String label, String[] args) {
+    public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
         List<String> completions = new ArrayList<>();
         List<String> commands = new ArrayList<>();
 
@@ -88,17 +93,21 @@ public class MHCommand implements TabExecutor {
     }
 
     private void MsgSound(Player p, String msg, String sound, float volume, float pitch) {
-        FileConfiguration config = this.plugin.getConfig();
-
-        String prefix = config.getString("prefix");
         Location plocation = p.getLocation();
+        MessagesManager message;
+        ConfigManager configFile = plugin.getConfigManager();
+
+        configFile.LoadConfig();
+        message = new MessagesManager(plugin, configManager.getLang() + ".yml");
+        message.loadMessages();
 
         if (msg != null) {
-            p.sendMessage(ccolor(prefix) + ccolor(msg));
+            p.sendMessage(ccolor(message.getPrefix()) + ccolor(msg));
         }
 
         if (sound != null) {
             p.playSound(plocation, Sound.valueOf(sound), volume, pitch);
         }
     }
+
 }
