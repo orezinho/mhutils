@@ -10,6 +10,7 @@ import orepton.mHUtils.Events.PlayerQuit;
 import orepton.mHUtils.Events.ServerCommand;
 import orepton.mHUtils.Files.ConfigManager;
 import orepton.mHUtils.Files.MessagesManager;
+import orepton.mHUtils.Files.UpdateChecker;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.TabExecutor;
@@ -24,6 +25,13 @@ public final class MHUtils extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        // UpdateChecker
+        new UpdateChecker(this, 121149).getVersion(version -> {
+            if (!this.getDescription().getVersion().equals(version)) {
+                Bukkit.getConsoleSender().sendMessage(ccolor(getMessagesManager().getPrefix()) + ccolor("&eThere is a new update available!"));
+            }
+        });
+
         // Registering commands and events
         registerCommands();
 
@@ -73,4 +81,9 @@ public final class MHUtils extends JavaPlugin {
     public ConfigManager getConfigManager() {
         return configManager;
     }
+
+    private String ccolor(String parameter) {
+        return ChatColor.translateAlternateColorCodes('&', parameter);
+    }
 }
+
