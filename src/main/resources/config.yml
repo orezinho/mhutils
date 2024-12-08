@@ -1,4 +1,4 @@
-# You can create your own laguage files in the "languages" folder.
+# You can create your own language files in the "languages" folder.
 # Already made languages:
 #  en-US
 #  pt-BR
@@ -19,6 +19,22 @@ error-sound:
   sound: "ENTITY_ENDERMAN_TELEPORT"
   volume: 1
   pith: 1
+
+# Sound to play when player executes spawn command.
+spawn:
+  # Teleport player to the spawn location when joining.
+  # If fly spawn is set, players who have the permission "mhutils.fly.join"
+  # will be teleported to the fly spawn instead of the normal one.
+  join-spawn: true
+  # Delay in seconds.
+  spawn-delay: 5
+  # Cancel the teleport if player moves.
+  cancel-on-move: true
+  # Sound to display when teleporting back to spawn.
+  spawn-sound:
+    sound: "ENTITY_EXPERIENCE_ORB_PICKUP"
+    volume: 1
+    pitch: 2
 
 # Worlds where the plugin is active.
 # Obs: If you want to disable on all worlds

@@ -4,6 +4,9 @@ prefix: "&b[MHUtils] "
 # Message to display when the config is reloaded successfully.
 config-reload: "&aConfig reloaded!"
 
+# Message to display when player doesn't have permission to execute a command.
+permission-error: "&cYou don't have enough permissions for this."
+
 # Message to display when player sends help command.
 help-message:
   - ""
@@ -12,32 +15,47 @@ help-message:
   - " &a/mhutils reload &7- &fReloads the config files."
   - ""
 
-# Messages to display when player toggles flight mode
-fly-on: "&aFly mode on."
-fly-off: "&cFly mode off."
-
-# Messages to display if player tries to toggle on/off when it is already on/off.
-fly-already-on: "&cYour flight mode is already enabled."
-fly-already-off: "&cYour flight mode is already disabled."
-
-# Messages to display when player toggles other player's flight mode.
-fly-on-other: "&aYou've turned &b%player_name%&a's flight mode on."
-fly-off-other: "&cYou've turned &b%player_name%&c's flight mode off."
-
-# Messages to display when player had his flight mode activated by other player.
-fly-on-from-other: "&aYour flight mode has been turned on by &b%player_name%&a."
-fly-off-from-other: "&cYour flight mode has been turned off by &b%player_name%&a."
-
-# Messages to display when player tries to toggle on/off when it is already on/off on other player.
-fly-already-on-other: "&b%player_name%&c's flight mode is already on."
-fly-already-off-other: "&b%player_name%&c's flight mode is already off."
-
 # Message to display when the target player isn't online or can't be reached.
 target-not-found: "&cPlayer not found."
-
-# Message to display when player doesn't have permission for flight mode.
-permission-error: "&cYou don't have enough permissions for this."
 
 # Message to display when player tries to toggle flight in a world
 # that isn't listed on worlds-whitelist.
 world-error: "&cYou can't toggle flight mode in this world."
+
+fly:
+  # Messages to display when player toggles flight mode
+  fly-on: "&aFly mode on."
+  fly-off: "&cFly mode off."
+
+  # Messages to display if player tries to toggle on/off when it is already on/off.
+  fly-already-on: "&cYour flight mode is already enabled."
+  fly-already-off: "&cYour flight mode is already disabled."
+
+  # Messages to display when player toggles other player's flight mode.
+  fly-on-other: "&aYou've turned &b%player_name%&a's flight mode on."
+  fly-off-other: "&cYou've turned &b%player_name%&c's flight mode off."
+
+  # Messages to display when player had his flight mode activated by other player.
+  fly-on-from-other: "&aYour flight mode has been turned on by &b%player_name%&a."
+  fly-off-from-other: "&cYour flight mode has been turned off by &b%player_name%&a."
+
+  # Messages to display when player tries to toggle on/off when it is already on/off on other player.
+  fly-already-on-other: "&b%player_name%&c's flight mode is already on."
+  fly-already-off-other: "&b%player_name%&c's flight mode is already off."
+
+# Spawn messages session.
+spawn:
+  # Message to display when player sets the spawn location.
+  spawn-set: "&aSpawn location was successfully set."
+  # Message to display when the spawn hasn't been set yet.
+  spawn-not-set: "&cThe spawn hasn't been set yet."
+  # Message to display when player executes spawn command.
+  spawn-command: "&aYou will be teleported to the spawn in %spawn_delay% seconds."
+  # Message to display when player gets successfully teleported to the spawn.
+  spawn-success: "&aYou got teleported to the spawn."
+  # Message to display when player executes spawn command when he's already
+  # requested the teleport to the spawn.
+  spawn-already-teleporting: "&cYou're already teleporting to the spawn."
+  # Message to display when the teleport gets cancelled.
+  spawn-teleport-cancelled: "&cTeleport cancelled."
+

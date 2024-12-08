@@ -1,6 +1,7 @@
 package orepton.mHUtils.Commands;
 
 import orepton.mHUtils.Files.ConfigManager;
+import orepton.mHUtils.Files.CustomConfig;
 import orepton.mHUtils.Files.MessagesManager;
 import orepton.mHUtils.MHUtils;
 import org.bukkit.ChatColor;
@@ -20,10 +21,12 @@ public class MHCommand implements TabExecutor {
 
     private final MHUtils plugin;
     private final ConfigManager configManager;
+    private final CustomConfig spawnFile;
 
     public MHCommand(MHUtils plugin) {
         this.plugin = plugin;
         configManager = new ConfigManager(plugin);
+        spawnFile = new CustomConfig("spawn.yml", null, plugin);
 
     }
 
@@ -48,25 +51,31 @@ public class MHCommand implements TabExecutor {
                 MsgSound(p, message.getPerm_error(), message.getError_sound(), message.getError_volume(), message.getError_pitch());
             }
         } else if (args.length == 1) {
-            if (p.hasPermission("mhutils.reload")) {
-                switch (args[0]) {
-                    case "reload":
+            switch (args[0]) {
+                case "reload":
+                    if (p.hasPermission("mhutils.reload")) {
                         message.loadMessages();
                         configFile.LoadConfig();
-
+                        spawnFile.reloadConfig();
                         if (message.getReload() != null) {
                             p.sendMessage(ccolor(message.getPrefix()) + ccolor(message.getReload()));
                             p.playSound(plocation, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0f, 2.0f);
                         }
-                        break;
-                    case "help":
+                    } else {
+                        MsgSound(p, message.getPerm_error(), message.getError_sound(), message.getError_volume(), message.getError_pitch());
+                    }
+                    break;
+
+                case "help":
+                    if (p.hasPermission("mhutils.use")) {
                         for (String line : message.getHelp()) {
                             p.sendMessage(ccolor(line));
                         }
-                        break;
-                }
+                    } else {
+                        MsgSound(p, message.getPerm_error(), message.getError_sound(), message.getError_volume(), message.getError_pitch());
+                    }
+                    break;
             }
-
         }
         return true;
     }
@@ -96,7 +105,6 @@ public class MHCommand implements TabExecutor {
         Location plocation = p.getLocation();
         MessagesManager message;
         ConfigManager configFile = plugin.getConfigManager();
-
         configFile.LoadConfig();
         message = new MessagesManager(plugin, configManager.getLang() + ".yml");
         message.loadMessages();
@@ -109,5 +117,4 @@ public class MHCommand implements TabExecutor {
             p.playSound(plocation, Sound.valueOf(sound), volume, pitch);
         }
     }
-
 }

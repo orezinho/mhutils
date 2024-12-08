@@ -12,6 +12,12 @@ commands:
   mhutils:
     description: Main command of the plugin.
     usage: "/<command>"
+  setspawn:
+    description: Command to set the spawn.
+    usage: "/<command>"
+  spawn:
+    description: Command to teleport to the spawn.
+    usage: "/<command>"
 permissions:
   mhutils.*:
     default: op
@@ -20,3 +26,4 @@ permissions:
       mhutils.reload: true
       mhutils.fly.use: true
       mhutils.fly.join: true
+      mhutils.setspawn: true

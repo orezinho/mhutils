@@ -39,7 +39,19 @@ public class MessagesManager {
     List<String> worlds;
     List<String> help;
     String reload;
-    
+    String spawn_set;
+    Integer spawn_delay;
+    String spawn_sound;
+    String spawn_command_message;
+    float spawn_volume;
+    float spawn_pitch;
+    String spawn_success;
+    String spawn_alr_teleporting;
+    String spawn_tp_cancelled;
+    String spawn_not_set;
+    boolean spawn_move_cancel;
+    boolean join_spawn;
+
     public void loadMessages() {
         langFile.registerConfig();
         configFile.registerConfig();
@@ -47,28 +59,88 @@ public class MessagesManager {
         FileConfiguration config = configFile.getConfig();
         worlds = config.getStringList("worlds-whitelist");
         prefix = messages.getString("prefix");
+        spawn_move_cancel = config.getBoolean("spawn.cancel-on-move");
+        spawn_set = messages.getString("spawn.spawn-set");
+        spawn_delay = config.getInt("spawn.spawn-delay");
+        spawn_sound = config.getString("spawn.spawn-sound.sound");
+        spawn_volume = (float) config.getLong("spawn.spawn-sound.volume");
+        spawn_pitch = (float) config.getLong("spawn.spawn-sound.pitch");
+        spawn_command_message = messages.getString("spawn.spawn-command");
+        spawn_alr_teleporting = messages.getString("spawn.spawn-already-teleporting");
+        spawn_tp_cancelled = messages.getString("spawn.spawn-teleport-cancelled");
+        spawn_success = messages.getString("spawn.spawn-success");
+        spawn_not_set = messages.getString("spawn.spawn-not-set");
         reload = messages.getString("config-reload");
         perm_error = messages.getString("permission-error");
-        error_sound = messages.getString("error-sound.sound");
+        error_sound = config.getString("error-sound.sound");
         lang = config.getString("languages");
-        fly_alr_on = messages.getString("fly-already-on");
-        fly_alr_off = messages.getString("fly-already-off");
+        fly_alr_on = messages.getString("fly.fly-already-on");
+        fly_alr_off = messages.getString("fly.fly-already-off");
         world_error = messages.getString("world-error");
         help = messages.getStringList("help-message");
         fly_sound = config.getString("fly-sound.sound");
         targetError = messages.getString("target-not-found");
         fly_volume = (float) config.getLong("fly-sound.volume");
         fly_pitch = (float) config.getLong("fly-sound.pitch");
-        fly_on = messages.getString("fly-on");
-        fly_off = messages.getString("fly-off");
-        fly_alr_on_other = messages.getString("fly-already-on-other");
-        fly_alr_off_other = messages.getString("fly-already-off-other");
-        fly_on_other = messages.getString("fly-on-other");
-        fly_off_other = messages.getString("fly-off-other");
-        fly_from_on = messages.getString("fly-on-from-other");
-        fly_from_off = messages.getString("fly-off-from-other");
+        fly_on = messages.getString("fly.fly-on");
+        fly_off = messages.getString("fly.fly-off");
+        fly_alr_on_other = messages.getString("fly.fly-already-on-other");
+        fly_alr_off_other = messages.getString("fly.fly-already-off-other");
+        fly_on_other = messages.getString("fly.fly-on-other");
+        fly_off_other = messages.getString("fly.fly-off-other");
+        fly_from_on = messages.getString("fly.fly-on-from-other");
+        fly_from_off = messages.getString("fly.fly-off-from-other");
         error_volume = config.getLong("error-sound.volume");
         error_pitch = config.getLong("error-sound.pitch");
+        join_spawn = config.getBoolean("spawn.join-spawn");
+    }
+
+    public boolean isJoin_spawn() {
+        return join_spawn;
+    }
+
+    public boolean isSpawn_move_cancel() {
+        return spawn_move_cancel;
+    }
+
+    public String getSpawn_tp_cancelled() {
+        return spawn_tp_cancelled;
+    }
+
+    public String getSpawn_not_set() {
+        return spawn_not_set;
+    }
+
+    public String getSpawn_alr_teleporting() {
+        return spawn_alr_teleporting;
+    }
+
+    public String getSpawn_set() {
+        return spawn_set;
+    }
+
+    public String getSpawn_success() {
+        return spawn_success;
+    }
+
+    public String getSpawn_sound() {
+        return spawn_sound;
+    }
+
+    public float getSpawn_volume () {
+        return spawn_volume;
+    }
+
+    public float getSpawn_pitch() {
+        return spawn_pitch;
+    }
+
+    public Integer getSpawn_delay() {
+        return spawn_delay;
+    }
+
+    public String getSpawn_command_message() {
+        return spawn_command_message;
     }
 
     public String getPrefix() {

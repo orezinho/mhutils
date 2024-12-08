@@ -2,7 +2,12 @@ package orepton.mHUtils;
 
 import orepton.mHUtils.Commands.FlyCommand;
 import orepton.mHUtils.Commands.MHCommand;
+import orepton.mHUtils.Commands.Spawn.SetspawnCommand;
+import orepton.mHUtils.Commands.Spawn.SpawnCommand;
 import orepton.mHUtils.Events.PlayerJoin;
+import orepton.mHUtils.Events.PlayerMove;
+import orepton.mHUtils.Events.PlayerQuit;
+import orepton.mHUtils.Events.ServerCommand;
 import orepton.mHUtils.Files.ConfigManager;
 import orepton.mHUtils.Files.MessagesManager;
 import org.bukkit.Bukkit;
@@ -27,6 +32,7 @@ public final class MHUtils extends JavaPlugin {
 
         getServer().getPluginManager().registerEvents(new PlayerJoin(this), this);
 
+        // PlaceholderAPI
         if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
             Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "[MHUtils] PlaceholderAPI found!");
         } else {
@@ -43,10 +49,21 @@ public final class MHUtils extends JavaPlugin {
     public void registerCommands() {
         TabExecutor FlyCmd = new FlyCommand(this);
         TabExecutor MHCmd = new MHCommand(this);
+        TabExecutor SetspawnCmd = new SetspawnCommand(this);
+        TabExecutor SpawnCmd = new SpawnCommand(this);
+        SpawnCommand SpawnRegister = new SpawnCommand(this);
+
         Objects.requireNonNull(this.getCommand("fly")).setTabCompleter(FlyCmd);
         Objects.requireNonNull(this.getCommand("fly")).setExecutor(FlyCmd);
         Objects.requireNonNull(this.getCommand("mhutils")).setTabCompleter(MHCmd);
         Objects.requireNonNull(this.getCommand("mhutils")).setExecutor(MHCmd);
+        Objects.requireNonNull(this.getCommand("setspawn")).setExecutor(SetspawnCmd);
+        Objects.requireNonNull(this.getCommand("setspawn")).setTabCompleter(SetspawnCmd);
+        Objects.requireNonNull(this.getCommand("spawn")).setTabCompleter(SpawnCmd);
+        Objects.requireNonNull(this.getCommand("spawn")).setExecutor(SpawnRegister);
+        getServer().getPluginManager().registerEvents(new PlayerMove(this, SpawnRegister), this);
+        getServer().getPluginManager().registerEvents(new PlayerQuit(this, SpawnRegister), this);
+        getServer().getPluginManager().registerEvents(new ServerCommand(this), this);
     }
 
     public MessagesManager getMessagesManager() {
@@ -56,5 +73,4 @@ public final class MHUtils extends JavaPlugin {
     public ConfigManager getConfigManager() {
         return configManager;
     }
-
 }
